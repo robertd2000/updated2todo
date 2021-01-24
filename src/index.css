@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.container {
+  margin-top: 20px;
+}
+
 li,
 ul {
   text-decoration: none;
@@ -27,16 +31,64 @@ ul {
   margin-top: 34px;
 }
 
+.btn-info {
+  margin-top: 20px;
+}
+
 .item__inner {
-  width: 600px;
+  width: 700px;
   margin: 10px auto;
   border-bottom: 1px solid rgb(83, 82, 82);
 }
 
 .container {
   margin: 0 auto;
+  width: 750px;
+  border-right: 1px solid rgb(158, 158, 158);
+  border-left: 1px solid rgb(173, 173, 173);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+  padding: 10px;
 }
 
 .d-inline {
   margin-top: 10px;
 }
+
+.hr {
+  color: green;
+  background-color: green;
+}
+
+.done {
+  color: green;
+  margin-left: 100px;
+}
+
+.done-grey {
+  color: gray;
+  max-width: 600px;
+  word-wrap:break-word
+}
+
+.doneDiv {
+  margin-top: 10px;
+}
+
+.closeShowText {
+  height: 20px;
+  text-decoration: none;
+  border: none;
+  background-color: white;
+}
+
+.titleItem {
+  margin-left: -115px;
+}
+
+.sort {
+  margin-left: 590px;
+}
+
+/* .paragraph {
+  width: 500px;
+} */

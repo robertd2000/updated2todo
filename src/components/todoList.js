@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {TodoItem} from './todoItem';
-import {InputItem} from './inputItem';
+import Spinner from './spinner';
+import {View} from './View';
 import {service, setService} from '../service/service';
 
 export const TodoList = () => {
 
     const [list, setList] = useState([])
-
+    const [loading, setloading] = useState(true);
     const [showModal, setModal] = useState('modal')
 
     useEffect(() => {
         service().then(data => setList(data))
+        setloading(false)
     }, [])
 
     const onDelete = id => {
@@ -24,15 +25,42 @@ export const TodoList = () => {
         })
     }
 
+    const doneTask = (id) => {
+
+        const todoPrev = list.filter(i => i.id !== id)
+        const todoCurrent = list.filter(i => i.id === id)
+        todoCurrent[0].done = !todoCurrent[0].done
+        const newItem = [...todoPrev, ...todoCurrent]  
+        setService(newItem)
+  
+        return setList(() => {
+          return newItem
+        })
+      }
+
     const addTodo = (title, text) => {
         const newItem = {
-            id: Math.floor(Math.random() * 1000), text: text, title: title, done: false
+            id: Math.floor(Math.random() * 1000), 
+            text: text, 
+            title: title, 
+            done: false,
+            date: new Date().toLocaleString(),
         }
         return setList((pre) => {
            let newList = [
             ...pre,
             newItem
         ]
+            newList = newList.sort((a, b) => {
+                if (a.date < b.date) {
+                    return 1;
+                  }
+                  if (a.date > b.date) {
+                    return -1;
+                  }
+                  // a должно быть равным b
+                  return 0;
+            })
            setService(newList)
             return newList
         })
@@ -40,39 +68,56 @@ export const TodoList = () => {
 
     const closeModal = () => setModal('modal')
 
-    const modal = (
-        <div className={showModal}>
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <p>Добавьте новый пост:</p>
-                    </div>
-                    <div className="modal-body">
-                        <InputItem addTodo={addTodo} closeModal={closeModal}/>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" onClick={closeModal} className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+    const setShowModal = () => setModal(showModal + ' show')
+
+    const sortByDate = () => {
+        let l = list.sort((a, b) => {
+            if (a.date > b.date) {
+                return 1;
+              }
+              if (a.date < b.date) {
+                return -1;
+              }
+              // a должно быть равным b
+              return 0;
+        })
+        console.log(l)
+        return setList(() => {
+            return [...l]
+        })
+    }
+
+    const onFind = (e) => {
+        let n = list
+        if (e == '') {
+            setList(() => {
+                return list
+            })
+        }
+        console.log(n)
+        const newList = list.filter(i => i.title.startsWith(e))
+        return setList(() => {
+            return newList
+        })
+    }
+
+    const spinner = loading ? <Spinner/> : null;
+    const content = !(loading) ? <View 
+        list={list} addTodo={addTodo} 
+        closeModal={closeModal} 
+        showModal={showModal}
+        onDelete={onDelete}
+        doneTask={doneTask}
+        setShowModal={setShowModal}
+        loading={loading}
+        sortByDate={sortByDate}
+        onFind={onFind}
+        /> : null;
 
     return (
-        <div className='container'>
-            {modal}
-            <button className='btn btn-info' onClick={() => setModal(showModal + ' show')}>Добавить</button>
-            {list.length !== 0 ? <p>Ваши заметки: </p> : <p>У вас нет заметок</p>}
-
-            <div>
-                {list.map(item => {
-                    return <TodoItem key={item.id}
-                    onDelete={() => onDelete(item.id)}
-                        text={item.text}
-                        title={item.title}
-                    />
-                })}
-            </div>
+        <div>
+            {spinner}
+            {content}
         </div>
     )
 }
