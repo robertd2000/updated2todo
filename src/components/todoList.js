@@ -78,7 +78,6 @@ export const TodoList = () => {
               if (a.date < b.date) {
                 return -1;
               }
-              // a должно быть равным b
               return 0;
         })
         console.log(l)
