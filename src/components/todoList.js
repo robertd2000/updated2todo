@@ -8,6 +8,7 @@ export const TodoList = () => {
     const [list, setList] = useState([])
     const [loading, setloading] = useState(true);
     const [showModal, setModal] = useState('modal')
+    const n = list
 
     useEffect(() => {
         service().then(data => setList(data))
@@ -45,12 +46,15 @@ export const TodoList = () => {
             title: title, 
             done: false,
             date: new Date().toLocaleString(),
+            show: true
         }
         return setList((pre) => {
+
            let newList = [
             ...pre,
             newItem
         ]
+
             newList = newList.sort((a, b) => {
                 if (a.date < b.date) {
                     return 1;
@@ -70,7 +74,9 @@ export const TodoList = () => {
 
     const setShowModal = () => setModal(showModal + ' show')
 
+    //метод сортировки по дате, указанной в каждом элементе массива list
     const sortByDate = () => {
+        //сотирует list по убыванию даты - показывает самые поздние посты/заметки
         let l = list.sort((a, b) => {
             if (a.date > b.date) {
                 return 1;
@@ -81,22 +87,44 @@ export const TodoList = () => {
               return 0;
         })
         console.log(l)
+        //записывает изменеия в стейт/state list
         return setList(() => {
             return [...l]
         })
     }
 
+    //Метод поиска по заголовкам title
     const onFind = (e) => {
-        let n = list
-        if (e == '') {
-            setList(() => {
-                return list
+
+        //Создает 2 массива - preList содержит элементы которые не начинаются на введенные символы
+        let preList = list.filter(i => !i.title.startsWith(e))
+        //show устанавливается в false чтобы они не отображались
+        preList.map(i => {
+            i.show = !i.show
+            return i
+        })
+        //массив вкл в себя элементы, начинающиеся на пользовательский ввод
+        const newList = list.filter(i => i.title.startsWith(e))
+        //show = true
+        newList.map(i => {
+            i.show = true
+            return i
+        })
+        //возвращает исходый массив list (можно удалить)
+        if (e === '') {
+            let c = list.map(i => {
+                i.show = true
+                return i
+            })
+            console.log(c)
+
+            return setList(() => {
+                return c
             })
         }
-        console.log(n)
-        const newList = list.filter(i => i.title.startsWith(e))
+        //записывает изменения в стейт для перерендера страницы
         return setList(() => {
-            return newList
+            return [...newList, ...preList]
         })
     }
 

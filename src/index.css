@@ -89,6 +89,6 @@ ul {
   margin-left: 590px;
 }
 
-/* .paragraph {
-  width: 500px;
-} */
+.hide {
+  display: none;
+}

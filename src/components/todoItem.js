@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-export const TodoItem = ({title, done, text, doneTask, onDelete, date}) => {
+export const TodoItem = ({title, done, text, doneTask, onDelete, date, show}) => {
     const [isOpen, setOpen] = useState(false);
 
     const doneStyle = done ? 'done' : ''
@@ -15,8 +15,8 @@ export const TodoItem = ({title, done, text, doneTask, onDelete, date}) => {
 
     return (
         <>
-            <div className='item__inner'>
-                <div className=''>
+            <div className={show ? 'item__inner' : 'hide'}>
+                <div>
                     <p className='float-left' >{date}</p>
                     <h1 className={doneStyle + ' d-inline titleItem'} onClick={doneTask} >{title}</h1>
                     <div className='buttons float-right'>

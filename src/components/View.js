@@ -3,7 +3,7 @@ import {TodoItem} from './todoItem';
 import Spinner from './spinner';
 import {Modal} from './modal'
 
-export const View = ({list, sortByDate, addTodo, closeModal, showModal, onDelete, doneTask, setShowModal, loading, onFind}) => {
+export const View = ({list, sortByDate, addTodo, closeModal, showModal, onDelete, doneTask, setShowModal, loading, onFind, show}) => {
     
     let mapList = (!loading) ? list.map(item => {
         return <TodoItem key={item.id}
@@ -13,11 +13,12 @@ export const View = ({list, sortByDate, addTodo, closeModal, showModal, onDelete
             title={item.title}
             done={item.done}
             date={item.date}
+            show={item.show}
         />
     }) : null
 
     const findItem = (e) => {
-        console.log(e.target.value)
+        console.log(e.target.value)    
         return onFind(e.target.value)
     }
 
