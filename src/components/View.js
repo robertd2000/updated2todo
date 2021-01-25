@@ -3,17 +3,27 @@ import {TodoItem} from './todoItem';
 import Spinner from './spinner';
 import {Modal} from './modal'
 
-export const View = ({list, sortByDate, addTodo, closeModal, showModal, onDelete, doneTask, setShowModal, loading, onFind, show}) => {
+export const View = ({list, sortByDate, addTodo, closeModal, showModal, onDelete, doneTask, setShowModal, onFind, changeContent}) => {
     
+    const [loading, setloading] = useState(true);
+
+    useEffect(() => {
+        setloading(false)
+    }, [])
+
     let mapList = (!loading) ? list.map(item => {
         return <TodoItem key={item.id}
             onDelete={() => onDelete(item.id)}
             doneTask={() => doneTask(item.id)}
+            changeContent={changeContent}
             text={item.text}
             title={item.title}
             done={item.done}
             date={item.date}
             show={item.show}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            id={item.id}
         />
     }) : null
 
@@ -29,7 +39,10 @@ export const View = ({list, sortByDate, addTodo, closeModal, showModal, onDelete
             <Modal showModal={showModal} addTodo={addTodo} closeModal={closeModal} />
             <button className='btn btn-info' onClick={setShowModal}>Добавить</button>
             {list.length !== 0 ? <p>Ваши заметки: </p> : <p>У вас нет заметок</p>}
-            <input onChange={findItem} className='form-control'></input>
+            <input 
+                onChange={findItem} 
+                className='form-control'
+                placeholder='Поиск ро постам'></input>
             <button onClick={sortByDate} className='btn sort'>Сортировать</button>
 
             <div>

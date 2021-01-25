@@ -52,6 +52,7 @@ ul {
 
 .d-inline {
   margin-top: 10px;
+  margin-left: 5px;
 }
 
 .hr {
@@ -67,7 +68,7 @@ ul {
 .done-grey {
   color: gray;
   max-width: 600px;
-  word-wrap:break-word
+  word-wrap: break-word
 }
 
 .doneDiv {
@@ -82,7 +83,7 @@ ul {
 }
 
 .titleItem {
-  margin-left: -115px;
+  margin-left: -75px;
 }
 
 .sort {
@@ -91,4 +92,9 @@ ul {
 
 .hide {
   display: none;
+}
+
+.float-left {
+  width: 100px;
+  word-wrap: break-word
 }
