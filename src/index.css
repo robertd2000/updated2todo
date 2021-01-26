@@ -26,9 +26,12 @@ ul {
 }
 
 #saveBtn {
-  position: absolute;
+  /* position: absolute;
   margin-left: 65px;
-  margin-top: 34px;
+  margin-top: 34px; */
+  position: absolute;
+    margin-left: 47px;
+    margin-top: 33px;
 }
 
 .btn-info {
@@ -83,7 +86,7 @@ ul {
 }
 
 .titleItem {
-  margin-left: -75px;
+  margin-left: -25px;
 }
 
 .sort {
@@ -97,4 +100,10 @@ ul {
 .float-left {
   width: 100px;
   word-wrap: break-word
+}
+
+.paragraph {
+  width: 600px;
+  margin-top: 20px;
+  margin-left: 50px;
 }

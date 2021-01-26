@@ -38,11 +38,11 @@ export const View = ({list, sortByDate, addTodo, closeModal, showModal, onDelete
         <div className='container'>
             <Modal showModal={showModal} addTodo={addTodo} closeModal={closeModal} />
             <button className='btn btn-info' onClick={setShowModal}>Добавить</button>
-            {list.length !== 0 ? <p>Ваши заметки: </p> : <p>У вас нет заметок</p>}
+            {list.length !== 0 ? <p>Ваши заметки: ({list.length}) </p> : <p>У вас нет заметок</p>}
             <input 
                 onChange={findItem} 
                 className='form-control'
-                placeholder='Поиск ро постам'></input>
+                placeholder='Поиск по постам'></input>
             <button onClick={sortByDate} className='btn sort'>Сортировать</button>
 
             <div>
